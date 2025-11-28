@@ -1,6 +1,7 @@
 from scrapper import get_today_bible_reading_url, get_profecy_cap
 from message import resume_message, bible_message, profecy_message
 from telegram_bot import newTelegramBot, sendBotMessage
+
 import asyncio
 
 def lambda_handler(event, context):

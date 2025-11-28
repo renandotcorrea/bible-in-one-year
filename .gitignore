@@ -1,2 +1,5 @@
 .idea
 .env
+package/*
+*.zip
+__pycache__/
