@@ -1,16 +1,19 @@
-# This is a sample Python script.
+import requests # type: ignore
+from bs4 import BeautifulSoup # type: ignore
 
-# Press ⌃F5 to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+def get_today_bible_reading_url():
+    base_bible_url = "https://pesquisa.biblia.com.br/pt-BR/NVI/"
 
+    page = requests.get(base_bible_url)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
+    soup = BeautifulSoup(page.text, "html.parser")
 
+    scripts = soup.find_all("script")[1].text
 
-# Press the green button in the gutter to run the script.
+    parts = scripts.split('$("#leitura").click(function() {')
+    location_line = parts[1].split(");", 1)
+    url = location_line[0].split(", ", 1)[1].strip()[1:-1]
+    return url
+
 if __name__ == '__main__':
-    print_hi('there')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    print ("Bible URL:", get_today_bible_reading_url())
