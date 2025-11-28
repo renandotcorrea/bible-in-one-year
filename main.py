@@ -134,7 +134,7 @@ def resume_message(bible_link, book_info):
     text = f'*Ano Bíblico:*\n\nLeitura de hoje:\n - {bible_books[link_parts[len(link_parts) - 2]]} {link_parts[len(link_parts) - 1]}\n - {ep_books[book_id]} cap.{text_book_caps}'
     return text
 
-def get_profecy(book_info):
+def get_profecy_links(book_info):
     base_url = 'https://ellenwhite.cpb.com.br'
     book_path = 'livro/index'
     links = {}
@@ -159,13 +159,17 @@ def profecy_message(book_captules):
     for k,v in book_captules.items():
         book_id = k
         break
-    profecy_links = get_profecy(book_captules)
+    profecy_links = get_profecy_links(book_captules)
     cap_text = ''
     for k,v in profecy_links.items():
         cap_text += f' - {ep_books[book_id]} cap. {k}: {v}\n'
 
     return f'*Espírito de Profecia:*\n\n{cap_text}'
 
+def bible_message(bible_link):
+    link_parts = bible_link.split('/')
+    text = f'*Bíblia:*\n\n - {bible_books[link_parts[len(link_parts) - 2]]} {link_parts[len(link_parts) - 1]}: {bible_link}'
+    return text
 
 if __name__ == '__main__':
     bible_link = get_today_bible_reading_url()
@@ -176,3 +180,5 @@ if __name__ == '__main__':
     print(message)
     profecy_links_message = profecy_message(profecy_caps)
     print(profecy_links_message)
+    bible_link_message = bible_message(bible_link)
+    print(bible_link_message)
